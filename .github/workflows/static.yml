@@ -1,5 +1,4 @@
-# Deploy only selected files to GitHub Pages
-name: Deploy static content to Pages
+name: Deploy selected static files to GitHub Pages
 
 on:
   push:
@@ -26,23 +25,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Setup Pages
+      # Setup GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # Prepare files for deployment
+      # Prepare only the static files
       - name: Prepare files for deployment
         run: |
           mkdir deploy
           cp index_original.html deploy/index.html
           cp app.js deploy/
-          cp -r enhanced_styles deploy/*
+          cp enhanced_styles.css deploy/
 
-      # Upload artifact (contents of deploy folder, not the folder itself)
+      # Upload the deploy folder
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: deploy/*
+          path: deploy
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
